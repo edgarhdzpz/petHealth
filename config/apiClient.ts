@@ -1,6 +1,7 @@
 //config apiClient
 import axios from "axios";
 import { readData, storeData } from "./localStorage"; // Asegúrate de que estas funciones existan y funcionen correctamente
+import { PetData } from "../components/features/pets/datasource/petDatasource";
 
 export const apiClient = axios.create({
   baseURL: 'http://localhost:3000', // Asegúrate de que esta URL sea accesible desde tu aplicación
@@ -56,3 +57,22 @@ apiClient.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+
+export const addPetAPI = (petData: PetData) => 
+  apiClient.post('/pets', petData);
+
+// Nueva función para obtener las mascotas del usuario
+export const getUserPetsAPI = () => 
+  apiClient.get('/pets');
+
+// New function to get details of a specific pet by ID
+export const getPetDetailsAPI = (id: string) => 
+  apiClient.get(`/pets/${id}`);
+
+// New function to update a specific pet by ID
+export const updatePetAPI = (id: string, petData: PetData) => 
+  apiClient.put(`/pets/${id}`, petData);
+
+// New function to delete a specific pet by ID
+export const deletePetAPI = (id: string) => 
+  apiClient.delete(`/pets/${id}`);
